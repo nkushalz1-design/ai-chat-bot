@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head> 
+     <meta charset="UTF-8">
+     
+    <title>Pro AI Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    
+
+<div class="container">
+
+    <div class="sidebar">
+        <h1>AI Assistant</h1>
+        <p class="pro-text">Pro Version</p>
+
+        <div class="ai-face">
+            <div class="face">
+                <div class="eyes">
+                    <div class="eye"></div>
+                    <div class="eye"></div>
+                </div>
+                <div class="mouth"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-section">
+        <div id="chat-box"></div>
+
+        <div class="input-area">
+            <input type="text" id="message" placeholder="Ask anything..." />
+            <button id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+      
+function startSpeaking(){
+    document.querySelector('.ai-face .face').classList.add('speaking');
+}
+
+function stopSpeaking(){
+    document.querySelector('.ai-face .face').classList.remove('speaking');
+}
+
+
+
+async function sendMessage() {
+
+    const input = document.getElementById("message");
+    const chatBox = document.getElementById("chat-box");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const text = input.value.trim();
+    if (!text) return;
+
+    // Add user message
+    chatBox.innerHTML += `<div class="message user">${text}</div>`;
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Button animation
+    sendBtn.classList.add("sending");
+    sendBtn.innerText = "Sending...";
+
+    // Add loader
+    const loaderId = "loader-" + Date.now();
+    chatBox.innerHTML += `
+        <div class="message bot" id="${loaderId}">
+            <div class="typing">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `;
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try {
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({message: text})
+        });
+
+        const data = await response.json();
+        console.log("Server response:", data);
+
+        // Remove loader
+        document.getElementById(loaderId).remove();
+
+        // Add AI reply safely
+if (data.reply) {
+    chatBox.innerHTML += `<div class="message bot">${data.reply}</div>`;
+} else if (data.error) {
+    chatBox.innerHTML += `<div class="message bot">Error: ${JSON.stringify(data.error)}</div>`;
+} else {
+    chatBox.innerHTML += `<div class="message bot">Unexpected server response</div>`;
+}
+
+
+    } catch (error) {
+        chatBox.innerHTML += `<div class="message bot">Server error</div>`;
+    }
+
+    sendBtn.classList.remove("sending");
+    sendBtn.innerText = "Send";
+}
+</script>
+
+</body>
+</html>

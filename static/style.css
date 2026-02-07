@@ -1,0 +1,257 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    background:linear-gradient(120deg,#0f172a,#1e293b,#111827);
+    background-size:400% 400%;
+    animation:gradientMove 12s ease infinite;
+}
+
+/* Animated background */
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.container{
+    display:flex;
+    width:100%;
+}
+
+.sidebar{
+    width:260px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(20px);
+    padding:30px;
+    color:white;
+    border-right:1px solid rgba(255,255,255,0.1);
+}
+
+.chat-section{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+#chat-box{
+    flex:1;
+    padding:30px;
+    overflow-y:auto;
+}
+
+.message{
+    padding:15px 22px;
+    border-radius:25px;
+    margin-bottom:18px;
+    max-width:65%;
+    animation:pop 0.4s ease;
+    box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+
+@keyframes pop{
+    from{transform:scale(0.8); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+.user{
+    margin-left:auto;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    color:white;
+}
+
+.bot{
+    background:rgba(255,255,255,0.1);
+    color:white;
+}
+
+/* Input */
+.input-area{
+    display:flex;
+    padding:20px;
+    background:rgba(0,0,0,0.3);
+}
+
+input{
+    flex:1;
+    padding:15px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    outline:none;
+}
+
+button{
+    margin-left:10px;
+    padding:15px 30px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 20px #3b82f6;
+}
+
+/* Typing animation */
+.typing{
+    display:flex;
+    gap:6px;
+}
+
+.typing span{
+    width:8px;
+    height:8px;
+    background:white;
+    border-radius:50%;
+    animation:bounce 1.4s infinite;
+}
+
+.typing span:nth-child(2){animation-delay:0.2s;}
+.typing span:nth-child(3){animation-delay:0.4s;}
+
+@keyframes bounce{
+    0%,80%,100%{transform:scale(0);}
+    40%{transform:scale(1);}
+}
+
+/* AI FACE CONTAINER */
+.ai-face{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+}
+
+/* FACE CIRCLE */
+.face{
+    width:220px;
+    height:220px;
+    background:radial-gradient(circle at center, #0f172a 40%, #0b1220 100%);
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+
+    /* Blue Glow */
+    box-shadow:
+        0 0 40px rgba(59,130,246,0.6),
+        0 0 80px rgba(59,130,246,0.4),
+        0 0 120px rgba(59,130,246,0.2);
+}
+
+/* Eyes */
+.eyes{
+    display:flex;
+    gap:40px;
+    margin-bottom:30px;
+}
+
+.eye{
+    width:20px;
+    height:20px;
+    background:#3b82f6;
+    border-radius:50%;
+    box-shadow:0 0 15px #3b82f6;
+}
+
+/* Mouth */
+.mouth{
+    width:70px;
+    height:12px;
+    background:#3b82f6;
+    border-radius:20px;
+    box-shadow:0 0 15px #3b82f6;
+}
+/* Sidebar layout fix */
+.container{
+    display:flex;
+    width:100%;
+}
+
+/* AI FACE */
+.ai-face{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    width:100%;
+}
+
+/* Face */
+.face{
+    width:200px;
+    height:200px;
+    background:radial-gradient(circle at center, #0f172a 40%, #0b1220 100%);
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+
+    box-shadow:
+        0 0 40px rgba(59,130,246,0.6),
+        0 0 80px rgba(59,130,246,0.4);
+
+    animation:float 4s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+/* Eyes */
+.eyes{
+    display:flex;
+    gap:40px;
+    margin-bottom:25px;
+}
+
+.eye{
+    width:20px;
+    height:20px;
+    background:#3b82f6;
+    border-radius:50%;
+    box-shadow:0 0 15px #3b82f6;
+    animation:blink 5s infinite;
+}
+
+/* Blink animation */
+@keyframes blink{
+    0%,95%,100%{height:20px;}
+    97%{height:3px;}
+}
+
+/* Mouth */
+.mouth{
+    width:70px;
+    height:12px;
+    background:#3b82f6;
+    border-radius:20px;
+    box-shadow:0 0 15px #3b82f6;
+    transition:0.2s;
+}
+
+/* Speaking animation */
+.speaking .mouth{
+    animation:talk 0.25s infinite alternate;
+}
+
+@keyframes talk{
+    from{height:8px;}
+    to{height:28px;}
+}
+
